@@ -31,3 +31,14 @@ data.drop(['Date', 'Location', 'Evaporation', 'Sunshine', 'WindGustDir', 'WindGu
 data.dropna(axis=0, how='any', inplace=True)
 
 #Dividir la data en train y test
+data_train = data[:71096]
+data_test = data[71096:]
+
+x = np.array(data_train.drop(['RainTomorrow'], axis=1))
+y = np.array(data_test.RainTomorrow)
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
+
+x_test_out = np.array(data_test.drop(['RainTomorrow'], axis=1))
+y_test_out = np.array(data_test.RainTomorrow)
+
