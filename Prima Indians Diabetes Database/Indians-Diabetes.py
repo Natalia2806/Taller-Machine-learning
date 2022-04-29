@@ -33,4 +33,16 @@ data.Age = pd.cut(data.Age, ranges, labels=names)
 
 data.dropna(axis=0,how='any', inplace=True)
 
+#Dividir la data en train y test 
+data_train = data[:384]
+data_test = data[384:]
+
+x = np.array(data_train.drop(['Outcome'], axis=1))
+y = np.array(data_test.Outcome)
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
+
+x_test_out = np.array(data_test.drop(['Outcome'], axis=1))
+y_test_out = np.array(data_test.Outcome)
+
 

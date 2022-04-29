@@ -30,7 +30,7 @@ data.drop(['Date', 'Location', 'Evaporation', 'Sunshine', 'WindGustDir', 'WindGu
 
 data.dropna(axis=0, how='any', inplace=True)
 
-#Dividir la data en train y test 38767
+#Dividir la data en train y test 
 data_train = data[:38767]
 data_test = data[38767:]
 
