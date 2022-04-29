@@ -12,6 +12,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from warnings import simplefilter
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 
 simplefilter(action='ignore', category=FutureWarning)
 
@@ -57,13 +58,13 @@ data_train = data[:22604]
 data_test = data[22604:]
 
 
-x = np.array(data_train.drop(['marital'], 1))
-y = np.array(data_train.marital)
+x = np.array(data_train.drop(['y'], 1))
+y = np.array(data_train.y)
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
 
-x_test_out = np.array(data_test.drop(['marital'], 1))
-y_test_out = np.array(data_test.marital)
+x_test_out = np.array(data_test.drop(['y'], 1))
+y_test_out = np.array(data_test.y)
 
 #Modelo de regresion logistica
 
@@ -85,3 +86,74 @@ print(f'accuracy de Test de Entrenamiento: {logreg.score(x_test, y_test)}')
 
 # Accuracy de Validación
 print(f'accuracy de Validación: {logreg.score(x_test_out, y_test_out)}')
+
+
+# MAQUINA DE SOPORTE VECTORIAL
+
+# Seleccionar un modelo
+svc = SVC(gamma='auto')
+
+# Entreno el modelo
+svc.fit(x_train, y_train)
+
+# MÉTRICAS
+
+print('*'*50)
+print('Maquina de soporte vectorial')
+
+# Accuracy de Entrenamiento de Entrenamiento
+print(f'accuracy de Entrenamiento de Entrenamiento: {svc.score(x_train, y_train)}')
+
+# Accuracy de Test de Entrenamiento
+print(f'accuracy de Test de Entrenamiento: {svc.score(x_test, y_test)}')
+
+# Accuracy de Validación
+print(f'accuracy de Validación: {svc.score(x_test_out, y_test_out)}')
+
+# RANDOM FOREST
+
+random_forest = RandomForestClassifier()
+
+# Entrenar el modelo
+
+random_forest.fit(x_train, y_train)
+
+# Metricas
+
+print('*'*50)
+print('Random Forest')
+
+# Accuracy de Test de Entrenamiento
+
+print(f'accuracy de Test de Entrenamiento: {random_forest.score(x_test, y_test)}')
+
+# Accuracy de Entrenamiento de Entrenamiento
+
+print(f'accuracy de Entrenamiento de Entrenamiento: {random_forest.score(x_train, y_train)}')
+
+# Accuracy de validacion
+
+print(f'accuracy de Test de Entrenamiento: {random_forest.score(x_test_out, y_test_out)}')
+
+
+# ARBOL DE DECISIÓN
+
+# Seleccionar un modelo
+arbol = DecisionTreeClassifier()
+
+# Entreno el modelo
+arbol.fit(x_train, y_train)
+
+# MÉTRICAS
+
+print('*'*50)
+print('Decisión Tree')
+
+# Accuracy de Entrenamiento de Entrenamiento
+print(f'accuracy de Entrenamiento de Entrenamiento: {arbol.score(x_train, y_train)}')
+
+# Accuracy de Test de Entrenamiento
+print(f'accuracy de Test de Entrenamiento: {arbol.score(x_test, y_test)}')
+
+# Accuracy de Validación
+print(f'accuracy de Validación: {arbol.score(x_test_out, y_test_out)}')
