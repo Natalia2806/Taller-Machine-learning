@@ -22,21 +22,26 @@ data = pd.read_csv('bank-full.csv')
 
 data.housing.replace(['yes', 'no'], [0, 1], inplace=True)
 
-data.marital.replace(['married', 'single', 'divorced'], [0, 1, 2], inplace=True)
+data.marital.replace(['married', 'single', 'divorced'], 
+                     [0, 1, 2], inplace=True)
 
 data.y.replace(['yes', 'no'], [0, 1], inplace=True)
 
-data.education.replace(['primary', 'secondary', 'tertiary', 'unknown'], [0, 1, 2, 3], inplace=True)
+data.education.replace(['primary', 'secondary', 'tertiary', 'unknown'], 
+                       [0, 1, 2, 3], inplace=True)
 
 data.default.replace(['no', 'yes'], [0, 1], inplace=True)
 
 data.loan.replace(['yes', 'no'], [0, 1], inplace=True)
 
-data.contact.replace(['unknown', 'cellular', 'telephone'], [0, 1, 2], inplace=True)
+data.contact.replace(['unknown', 'cellular', 'telephone'], 
+                     [0, 1, 2], inplace=True)
 
-data.poutcome.replace(['unknown', 'success', 'failure', 'other'], [0, 1, 2, 3], inplace=True)
+data.poutcome.replace(['unknown', 'success', 'failure', 'other'], 
+                      [0, 1, 2, 3], inplace=True)
 
-data.drop(['balance', 'duration', 'campaign', 'pdays', 'previous', 'job', 'day', 'month'], axis=1, inplace=True)
+data.drop(['balance', 'duration', 'campaign', 'pdays', 'previous', 'job', 
+           'day', 'month'], axis=1, inplace=True)
 
 age_mean = data.age.mean()
 data.age.replace(np.nan, age_mean, inplace=True)
@@ -48,7 +53,14 @@ data.age = pd.cut(data.age, ranges, labels=names)
 data.dropna(axis=0, how='any', inplace=True)
 
 #Dividir la data en train y test
+data_train = data[:22604]
+data_test = data[22604:]
 
 
+x = np.array(data_train.drop(['marital'], 1))
+y = np.array(data_train.marital)
 
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
 
+x_test_out = np.array(data_test.drop(['marital'], 1))
+y_test_out = np.array(data_test.marital)
